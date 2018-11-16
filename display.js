@@ -1,5 +1,9 @@
 const ansi = require('ansi')
 const cursor = ansi(process.stdout)
+const fs = require('fs')
+
+let errlog = fs.createWriteStream('.log')
+process.stderr.write = errlog.write.bind(errlog)
 
 module.exports = {
   fb: null,
@@ -34,7 +38,7 @@ module.exports = {
 
       if (n != old8[i]) {
         let x = ((fbOffs + i) % m.w) + 1
-        let y = Math.floor((fbOffs + i) / m.w)
+        let y = Math.floor((fbOffs + i) / m.w) + 1
 
         if (x == 1 /* || (y == 1 && !highLow) */) continue
         cursor

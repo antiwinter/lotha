@@ -51,6 +51,15 @@ const code = {
 
 module.exports = {
   pad: null,
+  _send(c, done) {
+    let m = this
+    m.pad[c & 0x07][c >> 3] = 1
+    setTimeout(() => {
+      m.pad[c & 0x07][c >> 3] = 0
+      if (done) done()
+    }, 200)
+  },
+
   init(pad) {
     let m = this
     m.pad = pad
@@ -75,13 +84,13 @@ module.exports = {
         return
       }
 
-      m.pad[c & 0x07][c >> 3] = 1
-      setTimeout(() => {
-        m.pad[c & 0x07][c >> 3] = 0
-      }, 200)
+      m._send(c)
     })
 
     process.stdin.setRawMode(true)
     process.stdin.resume()
+  },
+  send(name, done) {
+    this._send(code[name], done)
   }
 }
