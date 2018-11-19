@@ -1,6 +1,6 @@
 const GUT = require('./gut')
 const keyboard = require('./keyboard')
-const display = require('./display')
+const display = require('./di-braille')
 const log = console.error
 
 log('welcome')
