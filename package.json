@@ -12,6 +12,7 @@
     "ansi": "^0.3.1",
     "cli-cursor": "^2.1.0",
     "drawille": "^1.1.0",
-    "keypress": "^0.2.1"
+    "keypress": "^0.2.1",
+    "node-sdl2": "^2.1.2"
   }
 }
