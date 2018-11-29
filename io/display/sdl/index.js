@@ -35,14 +35,17 @@ module.exports = {
             App.quit()
         })
         m.win.on('keydown', (key) => {
-            KB.send(key.scanname.toLowerCase())
+            KB.key_event(key.scanname.toLowerCase(), true)
+        })
+        m.win.on('keyup', (key) => {
+            KB.key_event(key.scanname.toLowerCase(), false)
         })
 
         setInterval(() => {
             m.drawfb()
         }, 1000/m.fps)
         console.log('init display')
-        console.log(m)
+        //console.log(m)
         return this
     },
 
