@@ -3,7 +3,7 @@ const fs = require('fs')
 const NS = require('node-sdl2')
 const App = NS.app
 const Window = NS.window
-const KB = require('./keyboard')
+const KB = require('../../keyboard/default')
 
 let errlog = fs.createWriteStream('.log')
 process.stderr.write = errlog.write.bind(errlog)
