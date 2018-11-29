@@ -39,7 +39,7 @@ module.exports = {
         })
 
         setInterval(() => {
-            m.win.render.present()
+            m.drawfb()
         }, 1000/m.fps)
         console.log('init display')
         console.log(m)
@@ -50,26 +50,25 @@ module.exports = {
         let m = this
         offs *= 8
 
-        let render = m.win.render
-        let size = render.outputSize
-
         for (let i = 0; i < 8; i++) {
-            let n
-            if (value & (1 << (7 - i)))
-                n = 1
-            else
-                n = 0
-
-            y = Math.floor(offs / m.w)
-            x = offs % m.w + i
-            if (n != m.fb[offs + i]) {
-                render.color = n == 1 ? 0xffffff : 0x0
-                color = n == 1 ? 0xffffff : 0x0
-                render.fillRect([[x*m.vpx, y*m.vpx, m.vpx, m.vpx]])
-            }
-
-            m.fb[offs + i] = n
+            m.fb[offs + i] = !!(value & (1 << (7 - i)))
         }
     },
+
+    drawfb() {
+        let m = this
+        let render = m.win.render
+        render.color = 0x0
+        render.fillRect([[0, 0, m.w * m.vpx, m.h * m.vpx]])
+        render.color = 0xffffff
+        for (let x = 0; x < m.w; x++) {
+            for (let y = 0; y < m.h; y++) {
+                if (m.fb[y * m.w + x] ==  1) {
+                    render.fillRect([[x * m.vpx, y * m.vpx, m.vpx, m.vpx]])
+                }
+            }
+        }
+        render.present()
+    }
 
 }
