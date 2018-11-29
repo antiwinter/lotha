@@ -1,6 +1,7 @@
 var keypress = require('keypress')
 
 const code = {
+  escape: 59,
   return: 29,
   left: 63,
   up: 26,
