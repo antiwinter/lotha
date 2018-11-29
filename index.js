@@ -1,6 +1,10 @@
+const config = require('./config.json')
+
+global.config = config
+
 const GUT = require('./gut')
-const keyboard = require('./keyboard')
-const display = require('./di-braille')
+const keyboard = require('./io/keyboard/' + config.keyboard)
+const display = require('./io/display/' + config.display)
 const log = console.error
 
 log('welcome')

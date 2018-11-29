@@ -1,0 +1,8 @@
+{
+    "display" : "sdl",
+    "keyboard" : "default",
+    "display_config": {
+        "vpx" : 2,
+        "fps" : 30
+    }
+}
