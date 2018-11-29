@@ -3,7 +3,7 @@ const fs = require('fs')
 const NS = require('node-sdl2')
 const App = NS.app
 const Window = NS.window
-const KB = require('../../keyboard/default')
+const KB = require('../../keyboard/' + global.config.keyboard)
 
 let errlog = fs.createWriteStream('.log')
 process.stderr.write = errlog.write.bind(errlog)
@@ -13,8 +13,8 @@ module.exports = {
     w: 0,
     h: 0,
     win: null,
-    vpx: 4,
-    fps: 20,
+    vpx: 4, //default 4
+    fps: 20, //default 20
 
     init(opt) {
         let m = this
@@ -23,6 +23,10 @@ module.exports = {
         m.h = opt.height
         m.bpp = opt.bpp
         m.fb = Buffer.alloc((m.w * m.h), 0)
+
+        console.log(global.config)
+        m.vpx = global.config.display_config.vpx
+        m.fps = global.config.display_config.fps
 
         let winopt = {w: m.w*m.vpx, h: m.h*m.vpx, resizable: false, background: 0x0}
         m.win = new Window(winopt)
@@ -38,6 +42,7 @@ module.exports = {
             m.win.render.present()
         }, 1000/m.fps)
         console.log('init display')
+        console.log(m)
         return this
     },
 
