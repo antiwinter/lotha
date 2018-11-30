@@ -1,6 +1,7 @@
 var keypress = require('keypress')
 
 const code = {
+  escape: 59,
   return: 29,
   left: 63,
   up: 26,
@@ -51,11 +52,16 @@ const code = {
 
 module.exports = {
   pad: null,
+
+  _key_event(c, down) {
+    let m = this
+    m.pad[c & 0x07][c >> 3] = down ? 1 : 0
+  },
   _send(c, done) {
     let m = this
-    m.pad[c & 0x07][c >> 3] = 1
+    m._key_event(c, true)
     setTimeout(() => {
-      m.pad[c & 0x07][c >> 3] = 0
+      m._key_event(c, false)
       if (done) done()
     }, 200)
   },
@@ -92,5 +98,8 @@ module.exports = {
   },
   send(name, done) {
     this._send(code[name], done)
+  },
+  key_event(name, down) {
+    this._key_event(code[name], down)
   }
 }
